@@ -1,7 +1,7 @@
 
 package View;
 
-import Controllers.PlaceOrderController;
+import Controllers.OrderController;
 import java.awt.Color;
 import java.awt.Cursor;
 import java.awt.Font;
@@ -228,12 +228,12 @@ public class PlaceOrder extends JFrame {
         // ===================================== Actions ========================================
         
         // Set Order Order Id to order id lable
-        if (PlaceOrderController.size() == 0) {
+        if (OrderController.size() == 0) {
             lblOrderId.setText("B0001");
         }
         else{
-            String LastId = PlaceOrderController.getLastId();
-            String OrderId = PlaceOrderController.genarateId(LastId);
+            String LastId = OrderController.getLastId();
+            String OrderId = OrderController.genarateId(LastId);
             lblOrderId.setText(OrderId);
         }       
         
@@ -241,12 +241,12 @@ public class PlaceOrder extends JFrame {
         btnSearch.addActionListener(evt -> {           
             WarningMassge.setVisible(false);
             
-            if (!PlaceOrderController.validateCustomerId(txtCustomerID.getText())) {
+            if (!OrderController.validateCustomerId(txtCustomerID.getText())) {
                 worningCustomerId.setVisible(true);                
             }
             else{
                 worningCustomerId.setVisible(false);                
-                String CustomerName = PlaceOrderController.searchCustomerName(txtCustomerID.getText());
+                String CustomerName = OrderController.searchCustomerName(txtCustomerID.getText());
                 if (!CustomerName.equals("null")) {
                     txtCustomerName.setText(CustomerName);
                     txtCustomerName.setEnabled(false);
@@ -271,7 +271,7 @@ public class PlaceOrder extends JFrame {
                 
             }
             else{
-                lblTital.setText(""+PlaceOrderController.CalculateTotal(txtQuantity.getText()));
+                lblTital.setText(""+OrderController.CalculateTotal(txtQuantity.getText()));
             }
             
         });
@@ -284,18 +284,18 @@ public class PlaceOrder extends JFrame {
                 worningLable.setText("Please fill all text fields");             
             }
             else{                                                     
-                PlaceOrderController.addList(lblOrderId.getText(), txtCustomerID.getText(), txtCustomerName.getText(), txtQuantity.getText());  
+                OrderController.addList(lblOrderId.getText(), txtCustomerID.getText(), txtCustomerName.getText(), txtQuantity.getText());  
                 WarningMassge.setVisible(true);
                 WarningMassge.setBackground(new Color(79, 174, 76));
                 worningLable.setText("Place Order Successful");  
                 
                 // Order Id 
-                if (PlaceOrderController.size() == 0) {
+                if (OrderController.size() == 0) {
                     lblOrderId.setText("B0001");
                 }
                 else{
-                    String LastId = PlaceOrderController.getLastId();
-                    String OrderId = PlaceOrderController.genarateId(LastId);
+                    String LastId = OrderController.getLastId();                    
+                    String OrderId = OrderController.genarateId(LastId);
                     lblOrderId.setText(OrderId);
                 }                    
                 txtCustomerID.setText("");
@@ -304,6 +304,7 @@ public class PlaceOrder extends JFrame {
                 txtQuantity.setText("");
                 txtQuantity.setEnabled(false);
                 lblTital.setText("0");
+                
             }
         });        
 

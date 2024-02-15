@@ -1,6 +1,9 @@
 
 package View;
 
+import Controllers.OrderController;
+import Model.Orders;
+
 import java.awt.Color;
 import java.awt.Cursor;
 import java.awt.Font;
@@ -9,6 +12,7 @@ import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
@@ -17,6 +21,8 @@ public class searchOrder extends JFrame {
     private JPanel ssearchPanel;
     private JPanel detailPanel;
     private JPanel buttonPanal;
+    private JPanel WarningMassge;
+    private JPanel detailPanelh;
 
     private JLabel titleLable;
     private JLabel lblOrderId;
@@ -30,6 +36,7 @@ public class searchOrder extends JFrame {
     private JLabel lblTotal;
     private JLabel lblStatus;
     private JLabel lblSta;
+    private JLabel worningLable;
 
     private JTextField txtOrderId;
 
@@ -61,10 +68,12 @@ public class searchOrder extends JFrame {
         // search Panel
         ssearchPanel = new JPanel();
         ssearchPanel.setBackground(new Color(193, 82, 77));
-        ssearchPanel.setBounds(0, 80, 880, 100);
+        ssearchPanel.setBounds(0, 80, 880, 150);
         ssearchPanel.setLayout(null);
         ssearchPanel.setBackground(Color.WHITE);
         add(ssearchPanel);
+        
+        
 
         lblOrderId = new JLabel("Enter Order ID :");
         lblOrderId.setFont(new Font("", 1, 15));
@@ -85,14 +94,36 @@ public class searchOrder extends JFrame {
         btnSearch.setBorder(null);
         btnSearch.setCursor(new Cursor(Cursor.HAND_CURSOR));
         ssearchPanel.add(btnSearch);
+        
+        // Worning message 
+        WarningMassge = new JPanel();        
+        WarningMassge.setBounds(100, 100, 470, 25);   
+        WarningMassge.setVisible(false);        
+        ssearchPanel.add(WarningMassge);        
+        
+        worningLable =  new JLabel();            
+        worningLable.setHorizontalAlignment(JLabel.CENTER);
+        worningLable.setForeground(Color.WHITE);          
+        WarningMassge.add(worningLable);       
 
+        
         // Detail Panel
         detailPanel = new JPanel();
         detailPanel.setBackground(new Color(193, 82, 77));
-        detailPanel.setBounds(0, 180, 880, 300);
+        detailPanel.setBounds(0, 200, 880, 260);
         detailPanel.setLayout(null);
         detailPanel.setBackground(Color.WHITE);
-        add(detailPanel);
+        detailPanel.setVisible(false);   
+        add(detailPanel);       
+        
+        // Detail Panel Hide
+        detailPanelh = new JPanel();
+        detailPanelh.setBackground(new Color(193, 82, 77));
+        detailPanelh.setBounds(0, 200, 880, 260);
+        detailPanelh.setLayout(null);
+        detailPanelh.setBackground(Color.WHITE);
+        detailPanelh.setVisible(true);   
+        add(detailPanelh);  
 
         // customer Id lables
         lblCID = new JLabel("Customer ID : ");
@@ -101,7 +132,7 @@ public class searchOrder extends JFrame {
         lblCID.setForeground(new Color(193, 82, 77));
         detailPanel.add(lblCID);
 
-        lblCustomerId = new JLabel("0786786767");
+        lblCustomerId = new JLabel();
         lblCustomerId.setFont(new Font("", 1, 15));
         lblCustomerId.setBounds(210, 30, 150, 50);
         detailPanel.add(lblCustomerId);
@@ -113,7 +144,7 @@ public class searchOrder extends JFrame {
         lblCName.setForeground(new Color(193, 82, 77));
         detailPanel.add(lblCName);
 
-        lblCustomerName = new JLabel("Kamal Priyantha");
+        lblCustomerName = new JLabel();
         lblCustomerName.setFont(new Font("", 1, 15));
         lblCustomerName.setBounds(238, 70, 150, 50);
         detailPanel.add(lblCustomerName);
@@ -125,7 +156,7 @@ public class searchOrder extends JFrame {
         lblQty.setForeground(new Color(193, 82, 77));
         detailPanel.add(lblQty);
 
-        lblQuantity = new JLabel("12");
+        lblQuantity = new JLabel();
         lblQuantity.setFont(new Font("", 1, 15));
         lblQuantity.setBounds(180, 110, 150, 50);
         detailPanel.add(lblQuantity);
@@ -137,7 +168,7 @@ public class searchOrder extends JFrame {
         lblTot.setForeground(new Color(193, 82, 77));
         detailPanel.add(lblTot);
 
-        lblTotal = new JLabel("12000.00");
+        lblTotal = new JLabel();
         lblTotal.setFont(new Font("", 1, 15));
         lblTotal.setBounds(155, 150, 150, 50);
         detailPanel.add(lblTotal);
@@ -149,22 +180,23 @@ public class searchOrder extends JFrame {
         lblStatus.setForeground(new Color(193, 82, 77));
         detailPanel.add(lblStatus);
 
-        lblSta = new JLabel("Preparing....");
+        lblSta = new JLabel();
         lblSta.setFont(new Font("", 1, 15));
         lblSta.setBounds(210, 190, 150, 50);
         detailPanel.add(lblSta);
 
-        // back Button
+        // Button panel
         buttonPanal = new JPanel();
         buttonPanal.setBackground(new Color(193, 82, 77));
-        buttonPanal.setBounds(0, 480, 880, 70);
+        buttonPanal.setBounds(0, 450, 880, 100);
         buttonPanal.setBackground(Color.WHITE);
         buttonPanal.setLayout(null);
 
+         // back Button
         btnBack = new JButton("Back");
         btnBack.setFont(new Font("", 1, 17));
         btnBack.setBackground(new Color(193, 82, 77));
-        btnBack.setBounds(100, 0, 80, 33);
+        btnBack.setBounds(100, 30, 80, 33);
         btnBack.setFocusable(false);
         btnBack.setBorder(null);
         btnBack.setCursor(new Cursor(Cursor.HAND_CURSOR));
@@ -175,13 +207,53 @@ public class searchOrder extends JFrame {
 
         add(buttonPanal);
 
+        // Back button Action Event
         btnBack.addActionListener(evt -> {
             setVisible(false);
             new Search().setVisible(true);
         });
 
-        btnSearch.addActionListener(evt -> {
-
-        });
+        // Search button Action Event
+        btnSearch.addActionListener(evt -> {            
+            if(txtOrderId.getText().equals("")) {
+                worningLable.setText("Plese Enter Order ID");
+                WarningMassge.setBackground(Color.RED);
+                WarningMassge.setVisible(true);                 
+            }
+            else{
+                Orders or = OrderController.serchOrder(txtOrderId.getText());
+                
+                if (or != null){
+                    detailPanel.setVisible(true);
+                    detailPanelh.setVisible(false);   
+                    worningLable.setText("Found Order Details");
+                    WarningMassge.setBackground(Color.GREEN);
+                    WarningMassge.setVisible(true);  
+                    
+                    lblCustomerId.setText(or.getCustomerId());
+                    lblCustomerName.setText(or.getCustomerName());
+                    lblQuantity.setText(""+or.getQuantity());
+                    lblTotal.setText(""+or.getValue());
+                    
+                    if (or.getStatus() == 1) {
+                        lblSta.setText("delivered...");
+                    }
+                    else if(or.getStatus() == 0){
+                        lblSta.setText("Preparing...");
+                    }
+                    else{
+                        lblSta.setText("canceled...");
+                    }           
+                }
+                else{
+                    worningLable.setText("Order Not Found. Wrong Input!");
+                    WarningMassge.setBackground(Color.RED);
+                    WarningMassge.setVisible(true);  
+                    detailPanel.setVisible(false);
+                    detailPanelh.setVisible(true);   
+                    txtOrderId.setText("");                 
+                }
+            }
+        }); 
     }
 }

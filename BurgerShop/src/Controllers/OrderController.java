@@ -4,7 +4,7 @@ package Controllers;
 import DB.OrderList;
 import Model.Orders;
 
-public class PlaceOrderController {
+public class OrderController {
     final static double BURGERPRICE = 500;	
     public static final int PREPARING=0;
     public static final int DELIVERED=1;
@@ -50,4 +50,16 @@ public class PlaceOrderController {
         int qty = Integer.parseInt(Quantity); 
         return BURGERPRICE * qty;
     }    
+    public static void prinOrdertList(){
+        ol.printList();
+    }
+    
+    //search order
+    public static Orders serchOrder(String id){
+            return ol.serchOrder(id);
+    }
+    
+    
+    
+    
 }

@@ -19,7 +19,7 @@ public class OrderList{
         }		
     }
     public boolean isEmpty(){
-            return first == null ? true : false;
+        return first == null ? true : false;
     }
     //get Last Id
     public String getLastId(){
@@ -31,34 +31,50 @@ public class OrderList{
     }
     
     public void printList(){
-            Node temp = first;
-            while (temp!=null){
-                    System.out.println(temp.orders.getDetails());
-                    temp = temp.next;
+        Node temp = first;
+        while (temp!=null){
+            System.out.println(temp.orders.getDetails());
+            if (temp.orders.getOrderId().equals("B0001")) {
+                System.out.println("yes");
             }
+            
+            temp = temp.next;
+        }
     }	
 
-    public String searchCustomerName(String id){
+    public String searchCustomerName(String id){        
         Node temp = first;		
         while (temp!=null){
-                if (temp.orders.getCustomerId().equals(id)){
-                        return temp.orders.getCustomerName();
-                }			
-                temp = temp.next;
+            if (temp.orders.getCustomerId().equals(id)){                
+                    return temp.orders.getCustomerName();
+            }			
+            temp = temp.next;
         }
         return "null";
     }
-
+    //-------------------------------------------------------------------------------
+    
     public Orders serchOrder(String id){
-            Node temp = first;		
-            while (temp!=null){
-                    if (temp.orders.getOrderId().equals(id)){
-                            return temp.orders;
-                    }			
-                    temp = temp.next;
-            }
-            return null;
+        Node temp = first;		
+        while (temp!=null){
+                if (temp.orders.getOrderId().equals(id)){
+                        return temp.orders;
+                }			
+                temp = temp.next;
+        }
+        return null;
     }
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
     public Orders serchOrder(int i){
             int count = 0;
             Node temp = first;		
