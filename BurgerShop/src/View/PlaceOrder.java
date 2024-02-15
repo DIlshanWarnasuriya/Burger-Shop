@@ -262,8 +262,18 @@ public class PlaceOrder extends JFrame {
         });
 
         // calTotal Button Action Events
-        calTotal.addActionListener(evt -> {             
-            lblTital.setText(""+PlaceOrderController.CalculateTotal(txtQuantity.getText()));
+        calTotal.addActionListener(evt -> {        
+            if (txtQuantity.getText().equals("")) {
+                WarningMassge.setVisible(true);
+                WarningMassge.setBackground(Color.red);
+                worningLable.setText("Please fill all text fields"); 
+                System.out.print("nnnnn");
+                
+            }
+            else{
+                lblTital.setText(""+PlaceOrderController.CalculateTotal(txtQuantity.getText()));
+            }
+            
         });
         
         // Place Order Button Action Events
