@@ -2,7 +2,9 @@
 package View;
 
 import java.awt.Color;
+import java.awt.Cursor;
 import java.awt.Font;
+import java.awt.Toolkit;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -13,10 +15,7 @@ public class HomePage extends JFrame {
 
     private JPanel photoPanel;
     private JPanel buttonPanel;
-
     private JLabel titleLable;
-    private JLabel imageLable;
-
     private JButton btnPlaceOrder;
     private JButton btnSearch;
     private JButton btnViewOrder;
@@ -27,6 +26,7 @@ public class HomePage extends JFrame {
         setSize(960, 600);
         setTitle("Burger Shop");
         setLocationRelativeTo(null);
+        setIconImage(Toolkit.getDefaultToolkit().getImage(getClass().getResource("../Image/burgerIcon.png")));
         setLayout(null);
 
         photoPanel = new JPanel();
@@ -35,20 +35,18 @@ public class HomePage extends JFrame {
         photoPanel.setLayout(null);
 
         titleLable = new JLabel("Welcome to Burgers");
-        titleLable.setFont(new Font("", 1, 30));
+        titleLable.setFont(new Font("", 1, 28));
         titleLable.setForeground(new Color(197, 162, 55));
-        titleLable.setBounds(0, 40, 400, 35);
+        titleLable.setBounds(0, 50, 400, 35);
         titleLable.setHorizontalAlignment(JLabel.CENTER);
         photoPanel.add(titleLable);
 
         JPanel imagePanel = new JPanel();
         imagePanel.setBackground(Color.WHITE);
-        imagePanel.setBounds(0, 100, 400, 450);
-
-        imagePanel.add(new JLabel(new ImageIcon("D:\\1  iCET\\Class\\OOP\\day 4\\Coursework\\BurgerShop\\src\\Image\\aaaaa.jpg")));
-
+        imagePanel.setBounds(50, 130, 300, 450);
+        imagePanel.add(new JLabel(new ImageIcon("src/Image/home.jpg")));
+        imagePanel.setBorder(null);
         photoPanel.add(imagePanel);
-
         add(photoPanel);
 
         buttonPanel = new JPanel();
@@ -63,6 +61,7 @@ public class HomePage extends JFrame {
         btnPlaceOrder.setForeground(Color.WHITE);
         btnPlaceOrder.setFocusable(false);
         btnPlaceOrder.setBorder(null);
+        btnPlaceOrder.setCursor(new Cursor(Cursor.HAND_CURSOR));
         buttonPanel.add(btnPlaceOrder);
 
         btnSearch = new JButton("Search");
@@ -72,6 +71,7 @@ public class HomePage extends JFrame {
         btnSearch.setForeground(Color.WHITE);
         btnSearch.setFocusable(false);
         btnSearch.setBorder(null);
+        btnSearch.setCursor(new Cursor(Cursor.HAND_CURSOR));
         buttonPanel.add(btnSearch);
 
         btnViewOrder = new JButton("View Order");
@@ -81,6 +81,7 @@ public class HomePage extends JFrame {
         btnViewOrder.setForeground(Color.WHITE);
         btnViewOrder.setFocusable(false);
         btnViewOrder.setBorder(null);
+        btnViewOrder.setCursor(new Cursor(Cursor.HAND_CURSOR));
         buttonPanel.add(btnViewOrder);
 
         btnUpdateOrder = new JButton("Update Order details");
@@ -99,12 +100,35 @@ public class HomePage extends JFrame {
         btnExit.setForeground(Color.WHITE);
         btnExit.setFocusable(false);
         btnExit.setBorder(null);
+        btnExit.setCursor(new Cursor(Cursor.HAND_CURSOR));
         buttonPanel.add(btnExit);
+
         add(buttonPanel);
 
         // Action Events
         btnExit.addActionListener(evt -> {
             System.exit(0);
+        });
+
+        btnPlaceOrder.addActionListener(evt -> {
+            setVisible(false);
+            new PlaceOrder().setVisible(true);
+
+        });
+
+        btnSearch.addActionListener(evt -> {
+            setVisible(false);
+            //new Search().setVisible(true);
+        });
+
+        btnViewOrder.addActionListener(evt -> {
+            setVisible(false);
+            //new ViewOrder().setVisible(true);
+        });
+
+        btnUpdateOrder.addActionListener(evt -> {
+            setVisible(false);
+            //new UpdateOrderDetails().setVisible(true);
         });
 
     }
