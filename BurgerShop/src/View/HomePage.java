@@ -118,17 +118,17 @@ public class HomePage extends JFrame {
 
         btnSearch.addActionListener(evt -> {
             setVisible(false);
-            //new Search().setVisible(true);
+            new Search().setVisible(true);
         });
 
         btnViewOrder.addActionListener(evt -> {
             setVisible(false);
-            //new ViewOrder().setVisible(true);
+            new ViewOrder().setVisible(true);
         });
 
         btnUpdateOrder.addActionListener(evt -> {
             setVisible(false);
-            //new UpdateOrderDetails().setVisible(true);
+            new UpdateOrderDetails().setVisible(true);
         });
 
     }

@@ -88,7 +88,7 @@ public class PlaceOrder extends JFrame {
         lblCustomerID.setFont(new Font("", 1, 15));
         detailPanel.add(lblCustomerID);
 
-        btnSearch = new JButton(new ImageIcon("Search.png"));
+        btnSearch = new JButton(new ImageIcon("src/Image/Search.png"));
         btnSearch.setBounds(380, 119, 30, 30);
         btnSearch.setFont(new Font("", 1, 15));
         btnSearch.setBackground(new Color(82, 150, 213));
