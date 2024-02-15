@@ -1,6 +1,8 @@
 
 package View;
 
+import Controllers.OrderController;
+import Model.Orders;
 import java.awt.Color;
 import java.awt.Cursor;
 import java.awt.Font;
@@ -14,6 +16,8 @@ import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 
 public class ProcessingOrders extends JFrame {
+    public static final int PREPARING=0;
+    
     private JPanel titPanel;
     private JLabel titleLable;
     private JPanel tablePanel;
@@ -61,6 +65,15 @@ public class ProcessingOrders extends JFrame {
         scrollPane.setBounds(0, 0, 650, 350);
 
         tablePanel.add(scrollPane);
+        
+        for(int i = 0; i < OrderController.size(); i++){
+            Orders or = OrderController.serchOrder(i);
+            if (or.getStatus() == PREPARING){
+                Object[] data = {or.getOrderId(), or.getCustomerId(), or.getCustomerName(), or.getQuantity(), or.getValue()};
+                dtm.addRow(data);
+            }
+            
+        }
 
         add(tablePanel);
 

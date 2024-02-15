@@ -59,6 +59,10 @@ public class OrderController {
             return ol.serchOrder(id);
     }
     
+    //search order using index
+    public static Orders serchOrder(int i){
+            return ol.serchOrder(i);
+    }
     
     
     
