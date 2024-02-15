@@ -1,6 +1,7 @@
 
 package View;
 
+import Controllers.PlaceOrderController;
 import java.awt.Color;
 import java.awt.Cursor;
 import java.awt.Font;
@@ -9,6 +10,7 @@ import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
@@ -17,6 +19,7 @@ public class PlaceOrder extends JFrame {
     private JPanel titPanel;    
     private JPanel detailPanel;
     private JPanel buttonPanal;
+    private JPanel WarningMassge;
 
     private JLabel titleLable;
     private JLabel lblOID;
@@ -29,15 +32,19 @@ public class PlaceOrder extends JFrame {
     private JLabel Line;
     private JLabel lblTo;
     private JLabel lblTital;
+    private JLabel worningCustomerId;
+    private JLabel worningLable;
 
-    private JTextField lblCustomerID;
-    private JTextField lblCustomerName;
-    private JTextField lblQuantity;
+    private JTextField txtCustomerID;
+    private JTextField txtCustomerName;
+    private JTextField txtQuantity;
 
     private JButton btnSearch;
     private JButton btnPlaceOrder;
     private JButton btnBack;
     private JButton btnCancel;
+    private JButton calTotal;    
+    
 
     public PlaceOrder() {
         setSize(880, 550);
@@ -62,9 +69,21 @@ public class PlaceOrder extends JFrame {
         add(titPanel);
 
         detailPanel = new JPanel();
-        detailPanel.setBackground(Color.white);
+        detailPanel.setBackground(Color.WHITE);
         detailPanel.setBounds(0, 80, 550, 450);
         detailPanel.setLayout(null);
+        
+        // Worning message 
+        WarningMassge = new JPanel();        
+        WarningMassge.setBounds(100, 30, 350, 25);   
+        WarningMassge.setVisible(false);
+        detailPanel.add(WarningMassge);        
+        
+        worningLable =  new JLabel();        
+        worningLable.setHorizontalAlignment(JLabel.CENTER);
+        worningLable.setForeground(Color.WHITE);
+        WarningMassge.add(worningLable);    
+        
 
         // Order id
         lblOID = new JLabel("Order Id:");
@@ -83,10 +102,16 @@ public class PlaceOrder extends JFrame {
         lblCID.setFont(new Font("", 1, 15));
         detailPanel.add(lblCID);
 
-        lblCustomerID = new JTextField();
-        lblCustomerID.setBounds(240, 120, 120, 30);
-        lblCustomerID.setFont(new Font("", 1, 15));
-        detailPanel.add(lblCustomerID);
+        txtCustomerID = new JTextField();
+        txtCustomerID.setBounds(240, 120, 120, 30);
+        txtCustomerID.setFont(new Font("", 1, 15));
+        detailPanel.add(txtCustomerID);
+        
+        worningCustomerId = new JLabel("Plese Enter Valid Phone No.");
+        worningCustomerId.setBounds(240, 95, 160, 30);
+        worningCustomerId.setForeground(Color.RED);
+        worningCustomerId.setVisible(false);
+        detailPanel.add(worningCustomerId);
 
         btnSearch = new JButton(new ImageIcon("src/Image/Search.png"));
         btnSearch.setBounds(380, 119, 30, 30);
@@ -104,10 +129,11 @@ public class PlaceOrder extends JFrame {
         lblCName.setFont(new Font("", 1, 15));
         detailPanel.add(lblCName);
 
-        lblCustomerName = new JTextField();
-        lblCustomerName.setBounds(240, 160, 200, 30);
-        lblCustomerName.setFont(new Font("", 1, 15));
-        detailPanel.add(lblCustomerName);
+        txtCustomerName = new JTextField();
+        txtCustomerName.setBounds(240, 160, 200, 30);
+        txtCustomerName.setFont(new Font("", 1, 15));
+        txtCustomerName.setEnabled(false);
+        detailPanel.add(txtCustomerName);
 
         // Quantity
         lblQty = new JLabel("Burger QTY :");
@@ -115,10 +141,22 @@ public class PlaceOrder extends JFrame {
         lblQty.setFont(new Font("", 1, 15));
         detailPanel.add(lblQty);
 
-        lblQuantity = new JTextField();
-        lblQuantity.setBounds(240, 200, 50, 30);
-        lblQuantity.setFont(new Font("", 1, 15));
-        detailPanel.add(lblQuantity);
+        txtQuantity = new JTextField();
+        txtQuantity.setBounds(240, 200, 50, 30);
+        txtQuantity.setFont(new Font("", 1, 15));
+        txtQuantity.setEnabled(false);
+        detailPanel.add(txtQuantity);
+        
+        
+        calTotal = new JButton("Calculate");
+        calTotal.setBounds(310, 200, 100, 30);
+        calTotal.setFont(new Font("", 1, 15));
+        calTotal.setBackground(new Color(193, 82, 77));
+        calTotal.setForeground(Color.WHITE);
+        calTotal.setFocusable(false);
+        calTotal.setBorder(null);
+        calTotal.setCursor(new Cursor(Cursor.HAND_CURSOR));
+        detailPanel.add(calTotal);
 
         // Status
         lblSta = new JLabel("Status :");
@@ -142,7 +180,7 @@ public class PlaceOrder extends JFrame {
         lblTo.setFont(new Font("", 1, 15));
         detailPanel.add(lblTo);
 
-        lblTital = new JLabel("2500.00");
+        lblTital = new JLabel("0");
         lblTital.setBounds(240, 300, 120, 30);
         lblTital.setFont(new Font("", 1, 15));
         detailPanel.add(lblTital);
@@ -184,27 +222,92 @@ public class PlaceOrder extends JFrame {
         btnCancel.setCursor(new Cursor(Cursor.HAND_CURSOR));
         buttonPanal.add(btnCancel);
 
-        add(buttonPanal);
+        add(buttonPanal);        
+        
+        
+        // ===================================== Actions ========================================
+        
+        // Set Order Order Id to order id lable
+        if (PlaceOrderController.size() == 0) {
+            lblOrderId.setText("B0001");
+        }
+        else{
+            String LastId = PlaceOrderController.getLastId();
+            String OrderId = PlaceOrderController.genarateId(LastId);
+            lblOrderId.setText(OrderId);
+        }       
+        
+        // Search Button Action Events
+        btnSearch.addActionListener(evt -> {           
+            WarningMassge.setVisible(false);
+            
+            if (!PlaceOrderController.validateCustomerId(txtCustomerID.getText())) {
+                worningCustomerId.setVisible(true);                
+            }
+            else{
+                worningCustomerId.setVisible(false);                
+                String CustomerName = PlaceOrderController.searchCustomerName(txtCustomerID.getText());
+                if (!CustomerName.equals("null")) {
+                    txtCustomerName.setText(CustomerName);
+                    txtCustomerName.setEnabled(false);
+                    txtQuantity.setEnabled(true);                               
+                }
+                else{
+                    txtCustomerName.setEnabled(true);
+                    txtQuantity.setEnabled(true);
+                    txtQuantity.setText("");
+                    txtCustomerName.setText("");
+                }                
+            }         
+        });
 
-        // Action Events
+        // calTotal Button Action Events
+        calTotal.addActionListener(evt -> {             
+            lblTital.setText(""+PlaceOrderController.CalculateTotal(txtQuantity.getText()));
+        });
+        
+        // Place Order Button Action Events
         btnPlaceOrder.addActionListener(evt -> {
+            if (txtCustomerID.equals("") || txtCustomerName.getText().equals("") || txtQuantity.getText().equals("")) {        
+                WarningMassge.setVisible(true);
+                WarningMassge.setBackground(Color.red);
+                worningLable.setText("Please fill all text fields");             
+            }
+            else{                                                     
+                PlaceOrderController.addList(lblOrderId.getText(), txtCustomerID.getText(), txtCustomerName.getText(), txtQuantity.getText());  
+                WarningMassge.setVisible(true);
+                WarningMassge.setBackground(new Color(79, 174, 76));
+                worningLable.setText("Place Order Successful");  
+                
+                // Order Id 
+                if (PlaceOrderController.size() == 0) {
+                    lblOrderId.setText("B0001");
+                }
+                else{
+                    String LastId = PlaceOrderController.getLastId();
+                    String OrderId = PlaceOrderController.genarateId(LastId);
+                    lblOrderId.setText(OrderId);
+                }                    
+                txtCustomerID.setText("");
+                txtCustomerName.setText("");
+                txtCustomerName.setEnabled(false);
+                txtQuantity.setText("");
+                txtQuantity.setEnabled(false);
+                lblTital.setText("0");
+            }
+        });        
 
-        });
-
-        btnSearch.addActionListener(evt -> {
-
-        });
-
+        //Cancel Button Action Events
         btnCancel.addActionListener(evt -> {
             System.exit(0);
         });
-
+        
+        //Back Button Action Events
         btnBack.addActionListener(evt -> {
             setVisible(false);
             new HomePage().setVisible(true);
         });
-
     }
-
 }
 
+       
