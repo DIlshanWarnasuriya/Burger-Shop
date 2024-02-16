@@ -77,8 +77,7 @@ public class OrderController {
         else if (Nowstatus.equals("Canceled                   v")) {
             status = CANCEL;
             total = 0;
-        }
-        
+        }        
         or.setStatus(status);
         or.setQuantity(Integer.parseInt(qty));
         or.setValue(total);

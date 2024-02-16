@@ -315,8 +315,7 @@ public class UpdateOrderDetails extends JFrame{
                         statusMenu.setText("Processing                v");  
                         
                         quantuty = or.getQuantity();
-                        btnUpdateOrder.setVisible(true);
-                        
+                        btnUpdateOrder.setVisible(true);                        
                     }              
                 }
             }

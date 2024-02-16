@@ -32,7 +32,7 @@ public class PlaceOrder extends JFrame {
     private JLabel Line;
     private JLabel lblTo;
     private JLabel lblTital;
-    private JLabel worningCustomerId;
+   
     private JLabel worningLable;
 
     private JTextField txtCustomerID;
@@ -105,13 +105,7 @@ public class PlaceOrder extends JFrame {
         txtCustomerID = new JTextField();
         txtCustomerID.setBounds(240, 120, 120, 30);
         txtCustomerID.setFont(new Font("", 1, 15));
-        detailPanel.add(txtCustomerID);
-        
-        worningCustomerId = new JLabel("Plese Enter Valid Phone No.");
-        worningCustomerId.setBounds(240, 95, 160, 30);
-        worningCustomerId.setForeground(Color.RED);
-        worningCustomerId.setVisible(false);
-        detailPanel.add(worningCustomerId);
+        detailPanel.add(txtCustomerID);      
 
         btnSearch = new JButton(new ImageIcon("src/Image/Search.png"));
         btnSearch.setBounds(380, 119, 30, 30);
@@ -242,10 +236,12 @@ public class PlaceOrder extends JFrame {
             WarningMassge.setVisible(false);
             
             if (!OrderController.validateCustomerId(txtCustomerID.getText())) {
-                worningCustomerId.setVisible(true);                
+                WarningMassge.setBackground(Color.red);
+                worningLable.setText("Please Enter Valid Phone Number");   
+                WarningMassge.setVisible(true);
             }
             else{
-                worningCustomerId.setVisible(false);                
+                WarningMassge.setVisible(false);             
                 String CustomerName = OrderController.searchCustomerName(txtCustomerID.getText());
                 if (!CustomerName.equals("null")) {
                     txtCustomerName.setText(CustomerName);
@@ -266,9 +262,7 @@ public class PlaceOrder extends JFrame {
             if (txtQuantity.getText().equals("")) {
                 WarningMassge.setVisible(true);
                 WarningMassge.setBackground(Color.red);
-                worningLable.setText("Please fill all text fields"); 
-                System.out.print("nnnnn");
-                
+                worningLable.setText("Please fill all text fields");            
             }
             else{
                 lblTital.setText(""+OrderController.CalculateTotal(txtQuantity.getText()));
@@ -283,8 +277,10 @@ public class PlaceOrder extends JFrame {
                 WarningMassge.setBackground(Color.red);
                 worningLable.setText("Please fill all text fields");             
             }
-            else{                                                     
-                OrderController.addList(lblOrderId.getText(), txtCustomerID.getText(), txtCustomerName.getText(), txtQuantity.getText());  
+            else{      
+                // Add To list
+                OrderController.addList(lblOrderId.getText(), txtCustomerID.getText(), txtCustomerName.getText(), txtQuantity.getText());
+                
                 WarningMassge.setVisible(true);
                 WarningMassge.setBackground(new Color(79, 174, 76));
                 worningLable.setText("Place Order Successful");  
