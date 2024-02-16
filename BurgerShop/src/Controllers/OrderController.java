@@ -134,4 +134,19 @@ public class OrderController {
         return -1;
     }	
     
+    // serch Customer using id and get index of list
+    public static int searchCustomer(String id){
+        return ol.searchCustomer(id);
+    }
+
+    // search order using index
+    public static Orders searchFromCustomer(int i){
+        return ol.searchFromCustomer(i);
+    }
+    
+    
+    
+    
+    
+    
 }

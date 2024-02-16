@@ -41,17 +41,6 @@ public class OrderList{
             temp = temp.next;
         }
     }	
-
-    public String searchCustomerName(String id){        
-        Node temp = first;		
-        while (temp!=null){
-            if (temp.orders.getCustomerId().equals(id)){                
-                    return temp.orders.getCustomerName();
-            }			
-            temp = temp.next;
-        }
-        return "null";
-    }   
     
     public Orders serchOrder(String id){
         Node temp = first;		
@@ -68,14 +57,15 @@ public class OrderList{
             int count = 0;
             Node temp = first;		
             while (temp!=null){
-                    if (count == i){
-                            return temp.orders;
-                    }			
-                    temp = temp.next;
-                    count++;
+                if (count == i){
+                        return temp.orders;
+                }			
+                temp = temp.next;
+                count++;
             }
             return null;
     }
+    
     public boolean serchOrderId(String id){
         Node temp = first;		
         while (temp!=null){
@@ -109,32 +99,42 @@ public class OrderList{
         return or;
     }
     
-    //-------------------------------------------------------------------------------
     
+     public String searchCustomerName(String id){        
+        Node temp = first;		
+        while (temp!=null){
+            if (temp.orders.getCustomerId().equals(id)){                
+                return temp.orders.getCustomerName();
+            }			
+            temp = temp.next;
+        }
+        return "null";
+    }   
+     //-------------------------------------------------------------------------------
     public int searchCustomer(String id){
-            int count = 0;
-            Node temp = first;		
-            while (temp!=null){
-                    if (temp.orders.getCustomerId().equals(id)){
-                            return count;
-                    }			
-                    count++;
-                    temp = temp.next;
-            }
-            return -1;
+        int count = 0;
+        Node temp = first;		
+        while (temp!=null){
+            if (temp.orders.getCustomerId().equals(id)){
+                    return count;
+            }			
+            count++;
+            temp = temp.next;
+        }
+        return -1;
     }
 
     public Orders searchFromCustomer(int i){
-            int count = 0;
-            Node temp = first;		
-            while (temp!=null){
-                    if (count == i){
-                            return temp.orders;
-                    }			
-                    temp = temp.next;
-                    count++;
-            }
-            return null;
+        int count = 0;
+        Node temp = first;		
+        while (temp!=null){
+            if (count == i){
+                    return temp.orders;
+            }			
+            temp = temp.next;
+            count++;
+        }
+        return null;
     }
 
     

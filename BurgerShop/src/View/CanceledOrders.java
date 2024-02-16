@@ -34,6 +34,7 @@ public class CanceledOrders extends JFrame {
         setTitle("Burger Shop");
         setLocationRelativeTo(null);
         setBackground(Color.white);
+        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setIconImage(Toolkit.getDefaultToolkit().getImage(getClass().getResource("../Image/burgerIcon.png")));
         setLayout(null);
 
@@ -61,6 +62,11 @@ public class CanceledOrders extends JFrame {
         String[] Heding = { "Order ID", "Customer ID", "Name", "Qty", "Total" };
         dtm = new DefaultTableModel(Heding, 0);
         tblCanceledOrders = new JTable(dtm);
+        
+        tblCanceledOrders.getTableHeader().setBackground(new Color(216, 216, 216));
+        tblCanceledOrders.getTableHeader().setFont(new Font("", 1, 17));        
+        tblCanceledOrders.setRowHeight(30);        
+        tblCanceledOrders.setFont(new Font("", 1, 15));   
 
         JScrollPane scrollPane = new JScrollPane(tblCanceledOrders);
         scrollPane.setBounds(0, 0, 650, 350);
@@ -70,7 +76,7 @@ public class CanceledOrders extends JFrame {
         for(int i = 0; i < OrderController.size(); i++){
             Orders or = OrderController.serchOrder(i);
             if (or.getStatus() == CANCEL){
-                Object[] data = {or.getOrderId(), or.getCustomerId(), or.getCustomerName(), or.getQuantity(), or.getValue()};
+                Object[] data = {"          "+or.getOrderId(), "     "+or.getCustomerId(), "       "+or.getCustomerName(), "             "+or.getQuantity(), "         "+or.getValue()};
                 dtm.addRow(data);
             }
             

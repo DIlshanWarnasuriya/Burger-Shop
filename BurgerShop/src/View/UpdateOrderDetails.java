@@ -59,6 +59,7 @@ public class UpdateOrderDetails extends JFrame{
         setTitle("Burger Shop");
         setLocationRelativeTo(null);
         setBackground(Color.white);
+        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setIconImage(Toolkit.getDefaultToolkit().getImage(getClass().getResource("../Image/burgerIcon.png")));
         setLayout(null);
 

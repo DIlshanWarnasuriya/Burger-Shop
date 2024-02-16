@@ -26,6 +26,7 @@ public class HomePage extends JFrame {
         setSize(960, 600);
         setTitle("Burger Shop");
         setLocationRelativeTo(null);
+        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setIconImage(Toolkit.getDefaultToolkit().getImage(getClass().getResource("../Image/burgerIcon.png")));
         setLayout(null);
 

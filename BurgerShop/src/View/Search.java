@@ -28,6 +28,7 @@ public class Search extends JFrame {
         setSize(960, 600);
         setTitle("Burger Shop");
         setLocationRelativeTo(null);
+        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setIconImage(Toolkit.getDefaultToolkit().getImage(getClass().getResource("../Image/burgerIcon.png")));
         setLayout(null);
 
@@ -123,8 +124,8 @@ public class Search extends JFrame {
         });
 
         btnSearchCustomer.addActionListener(evt -> {
-            //setVisible(false);
-            //new SearchCustomer().setVisible(true);
+            setVisible(false);
+            new SearchCustomer().setVisible(true);
         });       
 
         btnBack.addActionListener(evt -> {

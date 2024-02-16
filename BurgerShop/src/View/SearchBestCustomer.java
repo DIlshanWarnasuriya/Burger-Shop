@@ -32,6 +32,7 @@ public class SearchBestCustomer extends JFrame {
         setTitle("Burger Shop");
         setLocationRelativeTo(null);
         setBackground(Color.white);
+        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setIconImage(Toolkit.getDefaultToolkit().getImage(getClass().getResource("../Image/burgerIcon.png")));
         setLayout(null);
 
@@ -59,12 +60,17 @@ public class SearchBestCustomer extends JFrame {
         String[] Heding = { "Customer ID", "Name", "Total" };
         dtm = new DefaultTableModel(Heding, 0);
         CustomerTable = new JTable(dtm);
+        
+        CustomerTable.getTableHeader().setBackground(new Color(216, 216, 216));
+        CustomerTable.getTableHeader().setFont(new Font("", 1, 20));        
+        CustomerTable.setRowHeight(30);        
+        CustomerTable.setFont(new Font("", 1, 17));        
 
         JScrollPane scrollPane = new JScrollPane(CustomerTable);
         scrollPane.setBounds(0, 0, 650, 350);
+        scrollPane.setCursor(new Cursor(Cursor.HAND_CURSOR));        
 
         tablePanel.add(scrollPane);
-
         add(tablePanel);
 
         // bAck Button
@@ -96,7 +102,7 @@ public class SearchBestCustomer extends JFrame {
         Orders[] bc = OrderController.getBestCustomerArray();
         
         for (int i = bc.length-1; i >= 0; i--){
-            Object[] data = {bc[i].getCustomerId(), bc[i].getCustomerName(), ""+bc[i].getValue()};
+            Object[] data = {"            " + bc[i].getCustomerId(), "               "+bc[i].getCustomerName(), "                "+bc[i].getValue()};
             dtm.addRow(data);			
 	}
         
