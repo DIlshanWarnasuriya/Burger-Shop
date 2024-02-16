@@ -54,14 +54,34 @@ public class OrderController {
         ol.printList();
     }
     
-    //search order
+    //search order using given Id
     public static Orders serchOrder(String id){
             return ol.serchOrder(id);
     }
     
-    //search order using index
+    public static boolean serchOrderId(String id){
+            return ol.serchOrderId(id);
+    }
+    
+    //search order using index using for View Orders
     public static Orders serchOrder(int i){
             return ol.serchOrder(i);
+    }
+    
+    public static void UpdateOrder(Orders or, String qty, String Nowstatus){
+        int status = PREPARING;
+        double total = BURGERPRICE * Integer.parseInt(qty);
+        if (Nowstatus.equals("Delivered                   v")) {
+             status = DELIVERED;
+        }
+        else if (Nowstatus.equals("Canceled                   v")) {
+            status = CANCEL;
+            total = 0;
+        }
+        
+        or.setStatus(status);
+        or.setQuantity(Integer.parseInt(qty));
+        or.setValue(total);
     }
     
     

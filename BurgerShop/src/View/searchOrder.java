@@ -246,7 +246,7 @@ public class searchOrder extends JFrame {
                     }           
                 }
                 else{
-                    worningLable.setText("Order Not Found. Wrong Input!");
+                    worningLable.setText("Order Not Found. Wrong Order ID!");
                     WarningMassge.setBackground(Color.RED);
                     WarningMassge.setVisible(true);  
                     detailPanel.setVisible(false);

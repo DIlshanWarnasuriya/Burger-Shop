@@ -1,6 +1,8 @@
 
 package View;
 
+import Controllers.OrderController;
+import Model.Orders;
 import java.awt.Color;
 import java.awt.Cursor;
 import java.awt.Font;
@@ -19,7 +21,9 @@ public class UpdateOrderDetails extends JFrame{
     private JPanel titPanel;
     private JPanel ssearchPanel;
     private JPanel detailPanel;
+    private JPanel detailPanelH;
     private JPanel buttonPanal;
+    private JPanel WarningMassge;
 
     private JLabel titleLable;
     private JLabel lblOrderId;
@@ -31,6 +35,7 @@ public class UpdateOrderDetails extends JFrame{
     private JLabel lblTot;
     private JLabel lblTotal;
     private JLabel lblStatus;
+    private JLabel worningLable;
 
     private JTextField txtOrderId;
     private JTextField txtQty;
@@ -44,8 +49,11 @@ public class UpdateOrderDetails extends JFrame{
     private JMenuItem Delivered;
     private JMenuItem Processing;
     private JMenuItem Canceled;
+    
+    private Orders or;
 
-
+    int quantuty = 0;
+    
     public UpdateOrderDetails() {
         setSize(700, 580);
         setTitle("Burger Shop");
@@ -71,7 +79,7 @@ public class UpdateOrderDetails extends JFrame{
         // search Panel
         ssearchPanel = new JPanel();
         ssearchPanel.setBackground(new Color(193, 82, 77));
-        ssearchPanel.setBounds(0, 80, 880, 100);
+        ssearchPanel.setBounds(0, 80, 880, 130);
         ssearchPanel.setLayout(null);
         ssearchPanel.setBackground(Color.WHITE);
         add(ssearchPanel);
@@ -95,14 +103,36 @@ public class UpdateOrderDetails extends JFrame{
         btnSearch.setBorder(null);
         btnSearch.setCursor(new Cursor(Cursor.HAND_CURSOR));
         ssearchPanel.add(btnSearch);
+        
+        
+         // Worning message 
+        WarningMassge = new JPanel();        
+        WarningMassge.setBounds(100, 100, 470, 25);   
+        WarningMassge.setVisible(false);        
+        ssearchPanel.add(WarningMassge);        
+        
+        worningLable =  new JLabel();            
+        worningLable.setHorizontalAlignment(JLabel.CENTER);
+        worningLable.setForeground(Color.WHITE);          
+        WarningMassge.add(worningLable);            
 
         // Detail Panel
         detailPanel = new JPanel();
         detailPanel.setBackground(new Color(193, 82, 77));
         detailPanel.setBounds(0, 180, 880, 300);
         detailPanel.setLayout(null);
+        detailPanel.setVisible(false);
         detailPanel.setBackground(Color.WHITE);
         add(detailPanel);
+        
+        // Hide Detail Panel
+        detailPanelH = new JPanel();
+        detailPanelH.setBackground(new Color(193, 82, 77));
+        detailPanelH.setBounds(0, 180, 880, 300);
+        detailPanelH.setLayout(null);
+        detailPanelH.setVisible(true);
+        detailPanelH.setBackground(Color.WHITE);
+        add(detailPanelH);
 
         // customer Id lables
         lblCID = new JLabel("Customer ID        : ");
@@ -111,7 +141,7 @@ public class UpdateOrderDetails extends JFrame{
         lblCID.setForeground(new Color(193, 82, 77));
         detailPanel.add(lblCID);
 
-        lblCustomerId = new JLabel("0786786767");
+        lblCustomerId = new JLabel();
         lblCustomerId.setFont(new Font("", 1, 15));
         lblCustomerId.setBounds(238, 30, 150, 50);
         detailPanel.add(lblCustomerId);
@@ -123,7 +153,7 @@ public class UpdateOrderDetails extends JFrame{
         lblCName.setForeground(new Color(193, 82, 77));
         detailPanel.add(lblCName);
 
-        lblCustomerName = new JLabel("Kamal Priyantha");
+        lblCustomerName = new JLabel();
         lblCustomerName.setFont(new Font("", 1, 15));
         lblCustomerName.setBounds(238, 70, 150, 50);
         detailPanel.add(lblCustomerName);
@@ -135,7 +165,7 @@ public class UpdateOrderDetails extends JFrame{
         lblQty.setForeground(new Color(193, 82, 77));
         detailPanel.add(lblQty);
 
-        txtQty = new JTextField("12");
+        txtQty = new JTextField();
         txtQty.setFont(new Font("", 1, 15));
         txtQty.setBounds(238, 122, 50, 30);
         detailPanel.add(txtQty);
@@ -147,7 +177,7 @@ public class UpdateOrderDetails extends JFrame{
         lblTot.setForeground(new Color(193, 82, 77));
         detailPanel.add(lblTot);
 
-        lblTotal = new JLabel("12000.00");
+        lblTotal = new JLabel();
         lblTotal.setFont(new Font("", 1, 15));
         lblTotal.setBounds(238, 150, 150, 50);
         detailPanel.add(lblTotal);
@@ -194,6 +224,7 @@ public class UpdateOrderDetails extends JFrame{
         btnUpdateOrder.setForeground(Color.WHITE);
         btnUpdateOrder.setFocusable(false);
         btnUpdateOrder.setBorder(null);
+        btnUpdateOrder.setVisible(false);
         buttonPanal.add(btnUpdateOrder);
 
         btnBack = new JButton("Back");
@@ -229,8 +260,102 @@ public class UpdateOrderDetails extends JFrame{
             new HomePage().setVisible(true);
         });
 
+        
+        
         btnSearch.addActionListener(evt -> {
-
+            if (txtOrderId.getText().equals("")){
+                worningLable.setText("Plese Enter Order ID");
+                WarningMassge.setBackground(Color.RED);
+                WarningMassge.setVisible(true); 
+                detailPanelH.setVisible(true);
+                detailPanel.setVisible(false);
+            }
+            else{                
+                or = OrderController.serchOrder(txtOrderId.getText());	
+                
+                if (or == null) {
+                    worningLable.setText("Order Not Found. Wrong Order ID!");
+                    WarningMassge.setBackground(Color.RED);
+                    WarningMassge.setVisible(true);   
+                    detailPanelH.setVisible(true);
+                    detailPanel.setVisible(false);
+                    btnUpdateOrder.setVisible(false);
+                    txtOrderId.setText("");
+                }
+                else{               
+                    if (or.getStatus()== 1) {
+                        worningLable.setText("This Order Is Deleverd");
+                        WarningMassge.setBackground(Color.RED);
+                        WarningMassge.setVisible(true); 
+                        detailPanelH.setVisible(true);
+                        detailPanel.setVisible(false);
+                        btnUpdateOrder.setVisible(false);
+                        txtOrderId.setText("");
+                    }
+                    else if(or.getStatus()== 2){
+                        worningLable.setText("This Order Is Canceled");
+                        WarningMassge.setBackground(Color.RED);
+                        WarningMassge.setVisible(true);  
+                        detailPanelH.setVisible(true);
+                        detailPanel.setVisible(false);
+                        btnUpdateOrder.setVisible(false);
+                        txtOrderId.setText("");
+                    }
+                    else{
+                        worningLable.setText("Found Order Details");
+                        WarningMassge.setBackground(Color.GREEN);
+                        WarningMassge.setVisible(true); 
+                        detailPanelH.setVisible(false);
+                        detailPanel.setVisible(true);
+                        
+                        lblCustomerId.setText(or.getCustomerId());
+                        lblCustomerName.setText(or.getCustomerName());
+                        txtQty.setText(""+or.getQuantity());
+                        lblTotal.setText(""+or.getValue());
+                        statusMenu.setText("Processing                v");  
+                        
+                        quantuty = or.getQuantity();
+                        btnUpdateOrder.setVisible(true);
+                        
+                    }              
+                }
+            }
+        });        
+        
+        btnUpdateOrder.addActionListener(evt ->{      
+            if(txtQty.getText().equals("0") || txtQty.getText().equals("")){
+                worningLable.setText("Can't Update Quantity is null");
+                WarningMassge.setBackground(Color.RED);
+                WarningMassge.setVisible(true); 
+            }
+            else if (quantuty == Integer.parseInt(txtQty.getText()) && statusMenu.getText().equals("Processing                v")) {
+                worningLable.setText("No any Changes");
+                WarningMassge.setBackground(Color.RED);
+                WarningMassge.setVisible(true);    
+            }      
+            else{       
+                // update Order Details
+                OrderController.UpdateOrder(or, txtQty.getText(), statusMenu.getText());   
+                
+                if (statusMenu.getText().equals("Delivered                   v")) {
+                    worningLable.setText("Update Successful. Now Order Is Delivered");
+                    WarningMassge.setBackground(Color.GREEN);
+                    detailPanelH.setVisible(true);
+                    detailPanel.setVisible(false);
+                }
+                else if (statusMenu.getText().equals("Canceled                   v")) {
+                    worningLable.setText("Update Successful. Now Order Is Canceled");
+                    WarningMassge.setBackground(Color.GREEN);
+                    detailPanelH.setVisible(true);
+                    detailPanel.setVisible(false);
+                }
+                else{
+                    worningLable.setText("Update Successful");
+                    WarningMassge.setBackground(Color.GREEN);   
+                    detailPanelH.setVisible(true);
+                    detailPanel.setVisible(false);
+                }
+            }
         });
     }
 

@@ -51,8 +51,7 @@ public class OrderList{
             temp = temp.next;
         }
         return "null";
-    }
-    //-------------------------------------------------------------------------------
+    }   
     
     public Orders serchOrder(String id){
         Node temp = first;		
@@ -77,6 +76,16 @@ public class OrderList{
             }
             return null;
     }
+    public boolean serchOrderId(String id){
+        Node temp = first;		
+        while (temp!=null){
+                if (temp.orders.getOrderId().equals(id)){
+                        return true;
+                }			
+                temp = temp.next;
+        }
+        return false;
+    }
 
     public int size(){
             int count = 0;
@@ -87,6 +96,8 @@ public class OrderList{
             }
             return count;
     }
+    //-------------------------------------------------------------------------------
+    
     public int searchCustomer(String id){
             int count = 0;
             Node temp = first;		
@@ -127,10 +138,10 @@ public class OrderList{
 
     // inner class
     class Node{
-            private Orders orders;
-            private Node next;
-            Node(Orders orders){
-                    this.orders = orders;
-            }
+        private Orders orders;
+        private Node next;
+        Node(Orders orders){
+                this.orders = orders;
+        }
     }
 }
