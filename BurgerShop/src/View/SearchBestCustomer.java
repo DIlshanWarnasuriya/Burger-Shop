@@ -1,6 +1,8 @@
 
 package View;
 
+import Controllers.OrderController;
+import Model.Orders;
 import java.awt.Color;
 import java.awt.Cursor;
 import java.awt.Font;
@@ -90,6 +92,23 @@ public class SearchBestCustomer extends JFrame {
             setVisible(false);
             new Search().setVisible(true);
         });
+        
+        Orders[] bc = OrderController.getBestCustomerArray();
+        
+        for (int i = bc.length-1; i >= 0; i--){
+            Object[] data = {bc[i].getCustomerId(), bc[i].getCustomerName(), ""+bc[i].getValue()};
+            dtm.addRow(data);			
+	}
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
 
     }
 }

@@ -96,6 +96,19 @@ public class OrderList{
             }
             return count;
     }
+    
+    public Orders[] toArray(){
+        Orders[] or = new Orders[size()];
+        Node temp = first;
+        int i = 0;
+        while (temp!=null)
+        {
+            or[i++] = temp.orders;
+            temp = temp.next;
+        }
+        return or;
+    }
+    
     //-------------------------------------------------------------------------------
     
     public int searchCustomer(String id){
@@ -124,17 +137,7 @@ public class OrderList{
             return null;
     }
 
-    public Orders[] toArray(){
-            Orders[] or = new Orders[size()];
-            Node temp = first;
-            int i = 0;
-            while (temp!=null)
-            {
-                    or[i++] = temp.orders;
-                    temp = temp.next;
-            }
-            return or;
-    }
+    
 
     // inner class
     class Node{

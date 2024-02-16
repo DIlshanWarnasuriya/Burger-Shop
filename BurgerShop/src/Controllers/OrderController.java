@@ -68,6 +68,7 @@ public class OrderController {
             return ol.serchOrder(i);
     }
     
+    // update Order Details
     public static void UpdateOrder(Orders or, String qty, String Nowstatus){
         int status = PREPARING;
         double total = BURGERPRICE * Integer.parseInt(qty);
@@ -84,5 +85,53 @@ public class OrderController {
     }
     
     
+    // search best customers
+    public static Orders[] getBestCustomerArray(){
+        // best Customer Array
+        Orders[] bc = new Orders[0]; 
+
+        Orders[] or = ol.toArray();
+    
+        for (int i = 0; i < size(); i++){			
+            int index = IsDuplicate(bc, or[i].getCustomerId()); //check Duplicates
+            
+            if (index != -1){
+                Orders dpOrder = bc[index];
+                double value = dpOrder.getValue() + or[i].getValue();
+                dpOrder.setValue(value);
+            }
+            else{
+                Orders[] tempbc = new Orders[bc.length+1];
+
+                for (int j = 0; j < bc.length; j++){
+                    tempbc[j] = bc[j];
+                }				
+
+                tempbc[tempbc.length-1] = new Orders(or[i].getCustomerId(), or[i].getCustomerName(), or[i].getValue());				
+                bc = tempbc;
+            }	
+
+            // bubblee sort useing for sort Totals
+            for (int j = bc.length-1; j > 0; j--){
+                for (int z = 0; z < j; z++){
+                    if (bc[z].getValue() > bc[z+1].getValue()){
+                        Orders t = bc[z];
+                        bc[z] = bc[z+1];
+                        bc[z+1] = t;						
+                    }				
+                }
+            }							
+        }
+        return bc;
+    }    
+    // isduplicate 
+    public static int IsDuplicate(Orders[] bc, String id){
+        for (int i = 0; i < bc.length; i++){			
+            if (bc[i].getCustomerId().equals(id)){
+                    return i;
+            }
+        }
+        return -1;
+    }	
     
 }
